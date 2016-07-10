@@ -20,9 +20,10 @@ type DataServiceMember struct {
 type DataServiceMemberValue struct {
 	Role         string `json:"role"`
 	State        string `json:"state"`
+	XlogLocation int64  `json:"xlog_location"`
 	ConnURL      string `json:"conn_url"`
 	APIURL       string `json:"api_url"`
-	XlogLocation int64  `json:"xlog_location"`
+	RootAPIURL   string
 }
 
 func NewDataServiceMember(jsonStream string) (dataServiceMember *DataServiceMember, err error) {
@@ -36,6 +37,8 @@ func NewDataServiceMember(jsonStream string) (dataServiceMember *DataServiceMemb
 
 	dec = json.NewDecoder(strings.NewReader(dataServiceMember.JSONValue))
 	err = dec.Decode(&dataServiceMember.Value)
+
+	dataServiceMember.Value.RootAPIURL = strings.Replace(dataServiceMember.Value.APIURL, "/patroni", "/", 1)
 
 	return
 }

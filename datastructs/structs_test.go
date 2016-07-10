@@ -28,4 +28,14 @@ func TestDataStructs_NewDataServiceMember(t *testing.T) {
 	if dataServiceMember.Value.Role != expectedRole {
 		t.Fatalf("Service member role should be %s", expectedRole)
 	}
+
+	expectedAPI := "http://10.244.21.7:32769/patroni"
+	if dataServiceMember.Value.APIURL != expectedAPI {
+		t.Fatalf("Service member API should be %s", expectedAPI)
+	}
+
+	expectedRootAPI := "http://10.244.21.7:32769/"
+	if dataServiceMember.Value.RootAPIURL != expectedRootAPI {
+		t.Fatalf("Service member root API should be %s", expectedRootAPI)
+	}
 }
