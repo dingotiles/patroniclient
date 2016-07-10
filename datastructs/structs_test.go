@@ -1,4 +1,4 @@
-package patroniclient
+package datastructs
 
 import "testing"
 
