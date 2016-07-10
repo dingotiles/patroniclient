@@ -7,17 +7,17 @@ import (
 	"time"
 )
 
-type ServiceMember struct {
+type DataServiceMember struct {
 	Key           string    `json:"key"`
 	JSONValue     string    `json:"value"`
 	Expiration    time.Time `json:"expiration"`
 	TTL           int       `json:"ttl"`
 	ModifiedIndex int       `json:"modifiedIndex"`
 	CreatedIndex  int       `json:"createdIndex"`
-	Value         ServiceMemberValue
+	Value         DataServiceMemberValue
 }
 
-type ServiceMemberValue struct {
+type DataServiceMemberValue struct {
 	Role         string `json:"role"`
 	State        string `json:"state"`
 	ConnURL      string `json:"conn_url"`
@@ -25,17 +25,17 @@ type ServiceMemberValue struct {
 	XlogLocation int64  `json:"xlog_location"`
 }
 
-func NewServiceMember(jsonStream string) (serviceMember *ServiceMember, err error) {
-	serviceMember = &ServiceMember{}
+func NewDataServiceMember(jsonStream string) (dataServiceMember *DataServiceMember, err error) {
+	dataServiceMember = &DataServiceMember{}
 	dec := json.NewDecoder(strings.NewReader(jsonStream))
-	if err = dec.Decode(&serviceMember); err == io.EOF {
+	if err = dec.Decode(&dataServiceMember); err == io.EOF {
 		return
 	} else if err != nil {
 		return
 	}
 
-	dec = json.NewDecoder(strings.NewReader(serviceMember.JSONValue))
-	err = dec.Decode(&serviceMember.Value)
+	dec = json.NewDecoder(strings.NewReader(dataServiceMember.JSONValue))
+	err = dec.Decode(&dataServiceMember.Value)
 
 	return
 }
